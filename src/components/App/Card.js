@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import logo from './logo.svg';
 import './style.css';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -20,19 +19,18 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import {users} from './users'
 
 
 const styles = {
   card: {
     maxWidth: 500,
-    margin: "auto"
+    margin: "auto",
+    marginBottom: 30
   },
   media: {
     height: 500,
-  },
-  avatar: {
-   backgroundColor: red[500],
- },
+  }
 };
 
 class DogCard extends Component {
@@ -43,7 +41,6 @@ class DogCard extends Component {
   }
 
   componentDidMount(){
-    console.log(this.props.image);
   }
 
   render() {
@@ -59,16 +56,9 @@ class DogCard extends Component {
               <CardActionArea>
                 <CardHeader
                   avatar={
-                    <Avatar aria-label="Recipe" style={styles.avatar}>
-                      R
-                    </Avatar>
+                    <Avatar aria-label="Recipe" style={styles.avatar} src={require('./imgs/'+this.props.user.toLowerCase()+'.jpg')} />
                   }
-                  action={
-                    <IconButton>
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
-                  title="Shrimp and Chorizo Paella"
+                  title={this.props.user}
                 />
                 <CardMedia
                   style={styles.media}
