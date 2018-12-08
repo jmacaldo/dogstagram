@@ -20,6 +20,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import DogCard from './Card'
 
 
 const styles = {
@@ -41,19 +42,17 @@ class App extends Component {
     super(props);
 
     this.state = {
-      data:{},
-      isLoading: true
+      data:[],
     }
   }
 
   componentDidMount(){
-      axios.get(`https://dog.ceo/api/breeds/image/random`)
+      axios.get(`https://dog.ceo/api/breeds/image/random/5`)
       .then(res => {
         this.setState({
           data: res.data.message
         })
       })
-      .then(this.setState({isLoading: false}))
 
   }
 
@@ -61,52 +60,10 @@ class App extends Component {
     const { className, ...props} = this.props;
     return (
       <div className={classnames('App', className)} {...props}>
-        {this.state.isLoading &&
-          <div>Loading...</div>
-        }
-        {!this.state.isLoading &&
-          <div className="card">
-            <Card style={styles.card}>
-              <CardActionArea>
-                <CardHeader
-                  avatar={
-                    <Avatar aria-label="Recipe" style={styles.avatar}>
-                      R
-                    </Avatar>
-                  }
-                  action={
-                    <IconButton>
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
-                  title="Shrimp and Chorizo Paella"
-                />
-                <CardMedia
-                  style={styles.media}
-                  image={this.state.data}
-                  title="Contemplative Reptile"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="headline" component="h2">
-                    Lizard
-                  </Typography>
-                  <Typography component="p">
-                    Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                    across all continents except Antarctica
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
-                <Button size="small" color="primary">
-                  Share
-                </Button>
-                <Button size="small" color="primary">
-                  Learn More
-                </Button>
-              </CardActions>
-            </Card>
-          </div>
-        }
+        {this.state.data.map((dog)=> (
+          <DogCard image={dog} />
+        ))}
+
       </div>
     );
   }
