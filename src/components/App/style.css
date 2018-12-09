@@ -56,12 +56,60 @@ body {
 .filler{
   width: 10%;
 }
+
+.centerFill{
+  height: 100px
+}
 .logoUp{
+  height: 40px;
+  transition: all .5s ease-out;
+  margin-top: 10px;
+}
+
+.logoDown{
+  height: 30px;
+  transition: all .5s ease-out;
+  margin-top: 10px;
+}
+
+/* Dog Icon */
+
+.iconUp{
+  color: rgb(51,51,51);
   height: 40px;
   transition: all .5s ease-out;
 }
 
-.logoDown{
+.iconDown{
+  color: rgb(51,51,51);
+  height: 30px;
+  transition: all .5s ease-out;
+}
+
+.topLeftUp{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  transition: all .5s ease-out;
+  width: 250px;
+}
+
+.topLeftDown{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  transition: all .5s ease-out;
+  width: 170px;
+}
+
+.loadMore{
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.loadMore img{
   height: 30px;
   transition: all .5s ease-out;
 }
