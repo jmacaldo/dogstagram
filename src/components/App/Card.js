@@ -15,12 +15,11 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import red from '@material-ui/core/colors/red';
 import IconButton from '@material-ui/core/IconButton';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteOutlined from '@material-ui/icons/FavoriteOutlined';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import {users} from './users'
-
+import randomUser from './users'
 
 const styles = {
   card: {
@@ -40,7 +39,13 @@ class DogCard extends Component {
 
   }
 
+  componentWillMount(){
+    //this.setState({user: randomUser})
+
+  }
+
   componentDidMount(){
+  //  console.log(this.state.user);
   }
 
   render() {
@@ -67,7 +72,7 @@ class DogCard extends Component {
                 />
                 <CardContent>
                   <Typography gutterBottom variant="headline" component="h2">
-                    Lizard
+                    <FavoriteOutlined />
                   </Typography>
                   <Typography component="p">
                     Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
@@ -75,14 +80,6 @@ class DogCard extends Component {
                   </Typography>
                 </CardContent>
               </CardActionArea>
-              <CardActions>
-                <Button size="small" color="primary">
-                  Share
-                </Button>
-                <Button size="small" color="primary">
-                  Learn More
-                </Button>
-              </CardActions>
             </Card>
           </div>
         }

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import axios from 'axios';
 import DogCard from './Card'
-import {randomUser} from './users'
 import Nav from './Nav'
+import randomUser from './users'
 
 class App extends Component {
 
@@ -12,11 +12,12 @@ class App extends Component {
 
     this.state = {
       data:[],
-      isLoading: false
+      isLoading: false,
+      end: false
     }
   }
 
-  componentDidMount(){
+  componentWillMount(){
       axios.get(`https://dog.ceo/api/breeds/image/random/5`)
       .then(res => {
         this.setState({
@@ -25,25 +26,50 @@ class App extends Component {
       })
 
 // Loads additional images once the end of the window is reached
-      window.onscroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop
-        === document.documentElement.offsetHeight
-      ) {
-        this.setState({isLoading: true})
-        axios.get(`https://dog.ceo/api/breeds/image/random/5`)
-        .then(res => {
-          setTimeout(()=>{
-            this.setState({
-              data: [...this.state.data.concat(res.data.message) ]
-            })
-          },500)
+    //   window.onscroll = () => {
+    //   if (
+    //     window.innerHeight + document.documentElement.scrollTop
+    //     === document.documentElement.offsetHeight && this.state.data.length < 11
+    //   ) {
+    //     this.setState({isLoading: true})
+    //     axios.get(`https://dog.ceo/api/breeds/image/random/5`)
+    //     .then(res => {
+    //       setTimeout(()=>{
+    //         this.setState({
+    //           data: [...this.state.data.concat(res.data.message) ]
+    //         })
+    //       },500)
+    //
+    //     })
+    //     .then(this.setState({isLoading: false}))
+    //   } else  {
+    //     this.setState({end: true, isLoading: false})
+    //   }
+    // };
+//End of infinite scroll feature
+  }
 
-        })
-        .then(this.setState({isLoading: false}))
-        console.log(this.state.data.length);
-      }
-    };
+  componentDidMount(){
+    document.addEventListener('scroll', () => {
+      if (
+          window.innerHeight + document.documentElement.scrollTop
+          === document.documentElement.offsetHeight
+        ) {
+          console.log('end reached');
+          this.setState({isLoading: true})
+          axios.get(`https://dog.ceo/api/breeds/image/random/5`)
+              .then(res => {
+                setTimeout(()=>{
+                  this.setState({
+                    data: [...this.state.data.concat(res.data.message) ]
+                  })
+                },500)
+
+              })
+              .then(this.setState({isLoading: false}))
+        } 
+     });
+
   }
 
 
@@ -54,14 +80,19 @@ class App extends Component {
         <Nav />
         <div className="centerFill"></div>
         {this.state.data.map((dog, index)=> (
-          <DogCard key={index} image={dog} user={randomUser()}  />
+          <DogCard key={index} image={dog} user={randomUser()} />
         ))}
 
-        {!this.state.isLoading&&
+        {this.state.isLoading&&
           <div className="loadMore">
             <img src={require('./loading.gif')} />
           </div>
+        }
 
+        {this.state.end && this.state.data.length > 10 &&
+          <div className="loadMore">
+            <p>All out of puppers!</p>
+          </div>
         }
 
       </div>

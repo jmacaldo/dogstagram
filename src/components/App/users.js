@@ -12,6 +12,7 @@ const users = [
   "Phyllis",
   "Karen"];
 
-export function randomUser(){
+export default function(){
+  console.log('module fired!');
   return users[Math.floor(Math.random()*users.length)]
 }
