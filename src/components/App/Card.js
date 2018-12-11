@@ -58,7 +58,6 @@ class DogCard extends Component {
         {this.props.image &&
           <div className="card">
             <Card style={styles.card}>
-              <CardActionArea>
                 <CardHeader
                   avatar={
                     <Avatar aria-label="Recipe" style={styles.avatar} src={require('./imgs/'+this.props.user.toLowerCase()+'.jpg')} />
@@ -75,11 +74,10 @@ class DogCard extends Component {
                     <FavoriteOutlined />
                   </Typography>
                   <Typography component="p">
-                    Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                    <b>{this.props.user} </b>Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
                     across all continents except Antarctica
                   </Typography>
                 </CardContent>
-              </CardActionArea>
             </Card>
           </div>
         }

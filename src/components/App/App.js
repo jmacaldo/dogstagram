@@ -13,7 +13,8 @@ class App extends Component {
     this.state = {
       data:[],
       isLoading: false,
-      end: false
+      end: false,
+      limit: false
     }
   }
 
@@ -25,50 +26,32 @@ class App extends Component {
         })
       })
 
-// Loads additional images once the end of the window is reached
-    //   window.onscroll = () => {
-    //   if (
-    //     window.innerHeight + document.documentElement.scrollTop
-    //     === document.documentElement.offsetHeight && this.state.data.length < 11
-    //   ) {
-    //     this.setState({isLoading: true})
-    //     axios.get(`https://dog.ceo/api/breeds/image/random/5`)
-    //     .then(res => {
-    //       setTimeout(()=>{
-    //         this.setState({
-    //           data: [...this.state.data.concat(res.data.message) ]
-    //         })
-    //       },500)
-    //
-    //     })
-    //     .then(this.setState({isLoading: false}))
-    //   } else  {
-    //     this.setState({end: true, isLoading: false})
-    //   }
-    // };
-//End of infinite scroll feature
   }
 
   componentDidMount(){
-    document.addEventListener('scroll', () => {
-      if (
-          window.innerHeight + document.documentElement.scrollTop
-          === document.documentElement.offsetHeight
-        ) {
-          console.log('end reached');
-          this.setState({isLoading: true})
-          axios.get(`https://dog.ceo/api/breeds/image/random/5`)
-              .then(res => {
-                setTimeout(()=>{
-                  this.setState({
-                    data: [...this.state.data.concat(res.data.message) ]
-                  })
-                },500)
+  window.onscroll = () => {
+    if (
+        document.documentElement.clientHeight + window.scrollY
+        === document.documentElement.offsetHeight && this.state.data.length < 20
+      ) {
+        this.setState({isLoading: true})
+        console.log(this.state.isLoading);
 
-              })
-              .then(this.setState({isLoading: false}))
-        } 
-     });
+        axios.get(`https://dog.ceo/api/breeds/image/random/5`)
+            .then(res => {
+
+              setTimeout(()=>{
+                this.setState({
+                  data: [...this.state.data.concat(res.data.message) ]
+                })
+              },500)
+
+            })
+            .then(this.setState({isLoading: false}))
+            .then(console.log(this.state.isLoading))
+      } 
+
+   };
 
   }
 
@@ -83,15 +66,15 @@ class App extends Component {
           <DogCard key={index} image={dog} user={randomUser()} />
         ))}
 
-        {this.state.isLoading&&
+        {!this.state.isLoading&&
           <div className="loadMore">
-            <img src={require('./loading.gif')} />
+            <img src={require('./dogload.gif')} />
           </div>
         }
 
-        {this.state.end && this.state.data.length > 10 &&
+        {this.state.limit &&
           <div className="loadMore">
-            <p>All out of puppers!</p>
+            <h5>All out of puppers!</h5>
           </div>
         }
 
