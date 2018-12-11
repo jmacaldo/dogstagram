@@ -15,7 +15,7 @@ app.use(bodyParser.json())
 // Serve static assets
 app.use(express.static(path.resolve(__dirname, '..', 'build')))
 // Serve our api
-.use('/api', require('./api'))
+.use('/dogstagram/api', require('./api'))
 
 // Always return the main index.html, so react-router render the route in the client
 app.get('*', (req, res) => {

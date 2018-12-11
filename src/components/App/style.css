@@ -2,14 +2,6 @@ body {
   background-color: rgb(250,250,250)
 }
 
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
 
 .App-header {
   background-color: #222;
@@ -22,11 +14,102 @@ body {
   font-size: large;
 }
 
+/* Card */
 .card {
   margin: auto
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+/* Navigation */
+
+.navUp{
+  display: flex;
+  position: fixed;
+  z-index: 100;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 77px;
+  background-color: #fff;
+  margin-bottom: 200px;
+  transition: all .5s ease-out;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: rgb(230,230,230);
+}
+
+.navDown{
+  display: flex;
+  position: fixed;
+  z-index: 100;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background-color: #fff;
+  margin-bottom: 200px;
+  transition: all .5s ease-out;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: rgb(230,230,230);
+}
+
+.filler{
+  width: 10%;
+}
+
+.centerFill{
+  height: 100px
+}
+.logoUp{
+  height: 40px;
+  transition: all .5s ease-out;
+  margin-top: 10px;
+}
+
+.logoDown{
+  height: 30px;
+  transition: all .5s ease-out;
+  margin-top: 10px;
+}
+
+/* Dog Icon */
+
+.iconUp{
+  color: rgb(51,51,51);
+  height: 40px;
+  transition: all .5s ease-out;
+}
+
+.iconDown{
+  color: rgb(51,51,51);
+  height: 30px;
+  transition: all .5s ease-out;
+}
+
+.topLeftUp{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  transition: all .5s ease-out;
+  width: 250px;
+}
+
+.topLeftDown{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  transition: all .5s ease-out;
+  width: 170px;
+}
+
+.loadMore{
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.loadMore img{
+  height: 30px;
+  transition: all .5s ease-out;
 }

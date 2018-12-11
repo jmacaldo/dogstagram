@@ -1,39 +1,9 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import logo from './logo.svg';
-import './style.css';
-import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import CardHeader from '@material-ui/core/CardHeader';
-import Avatar from '@material-ui/core/Avatar';
-import red from '@material-ui/core/colors/red';
-import IconButton from '@material-ui/core/IconButton';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-
-
-const styles = {
-  card: {
-    maxWidth: 500,
-    margin: "auto"
-  },
-  media: {
-    height: 500,
-  },
-  avatar: {
-   backgroundColor: red[500],
- },
-};
+import DogCard from './Card'
+import Nav from './Nav'
+import randomUser from './users'
 
 class App extends Component {
 
@@ -41,72 +11,73 @@ class App extends Component {
     super(props);
 
     this.state = {
-      data:{},
-      isLoading: true
+      data:[],
+      isLoading: false,
+      end: false,
+      limit: false
     }
   }
 
-  componentDidMount(){
-      axios.get(`https://dog.ceo/api/breeds/image/random`)
+  componentWillMount(){
+      axios.get(`https://dog.ceo/api/breeds/image/random/5`)
       .then(res => {
         this.setState({
           data: res.data.message
         })
       })
-      .then(this.setState({isLoading: false}))
 
   }
+
+  componentDidMount(){
+  window.onscroll = () => {
+    if (
+        document.documentElement.clientHeight + window.scrollY
+        === document.documentElement.offsetHeight && this.state.data.length < 20
+      ) {
+        this.setState({isLoading: true})
+        console.log(this.state.isLoading);
+
+        axios.get(`https://dog.ceo/api/breeds/image/random/5`)
+            .then(res => {
+
+              setTimeout(()=>{
+                this.setState({
+                  data: [...this.state.data.concat(res.data.message) ]
+                })
+              },500)
+
+            })
+            .then(this.setState({isLoading: false}))
+            .then(console.log(this.state.isLoading))
+      } 
+
+   };
+
+  }
+
 
   render() {
     const { className, ...props} = this.props;
     return (
       <div className={classnames('App', className)} {...props}>
-        {this.state.isLoading &&
-          <div>Loading...</div>
-        }
-        {!this.state.isLoading &&
-          <div className="card">
-            <Card style={styles.card}>
-              <CardActionArea>
-                <CardHeader
-                  avatar={
-                    <Avatar aria-label="Recipe" style={styles.avatar}>
-                      R
-                    </Avatar>
-                  }
-                  action={
-                    <IconButton>
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
-                  title="Shrimp and Chorizo Paella"
-                />
-                <CardMedia
-                  style={styles.media}
-                  image={this.state.data}
-                  title="Contemplative Reptile"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="headline" component="h2">
-                    Lizard
-                  </Typography>
-                  <Typography component="p">
-                    Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                    across all continents except Antarctica
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
-                <Button size="small" color="primary">
-                  Share
-                </Button>
-                <Button size="small" color="primary">
-                  Learn More
-                </Button>
-              </CardActions>
-            </Card>
+        <Nav />
+        <div className="centerFill"></div>
+        {this.state.data.map((dog, index)=> (
+          <DogCard key={index} image={dog} user={randomUser()} />
+        ))}
+
+        {!this.state.isLoading&&
+          <div className="loadMore">
+            <img src={require('./dogload.gif')} />
           </div>
         }
+
+        {this.state.limit &&
+          <div className="loadMore">
+            <h5>All out of puppers!</h5>
+          </div>
+        }
+
       </div>
     );
   }
